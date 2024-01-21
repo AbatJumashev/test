@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>LIST Items</title>{% endblock %}
+
+{% block body %}
+<h1>Task List</h1>
+<form action="{{ url_for('delete_multiple') }}" method="post">
+    <ul>
+        {% for item in items %}
+            <li>
+                {{ item.name }} | <a href="{{ url_for('update', id=item.id) }}">Edit</a> | 
+            
+                <label>
+                    <input type="checkbox" name="task_ids" value="{{ item.id }}" onclick="submitForm(this)">
+            
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+    <input type="submit" value="Delete Selected Tasks" style="display: none;">
+</form>
+<a href="{{ url_for('create') }}">Add Task</a>
+
+<script>
+    function submitForm(checkbox) {
+        var form = checkbox.closest('form');
+        form.querySelector('input[type="submit"]').click();
+    }
+</script>
+{% endblock %}
